@@ -6,7 +6,7 @@ DESCRIPTION                    |editqf-description|
 USAGE                          |editqf-usage|
 CUSTOMIZATION                  |editqf-customization|
 INSTALLATION                   |editqf-installation|
-INSTALLATION                   |editqf-issues|
+KNOWN ISSUE                    |editqf-issues|
 CHANGELOG                      |editqf-changelog|
 
 ==========================================================================
@@ -60,8 +60,8 @@ storing and restoring quickfix and location lists:
 	:LocAddNotePattern[!] [NOTE] " add location entry matching the pattern of the current line
 
 Editqf has integrated support for the hier script
-(http://www.github.com/jceb/vim-hier) which highlights quickfix errors to
-make them more visible.
+(http://www.vim.org/scripts/script.php?script_id=3564) which highlights
+quickfix errors to make them more visible.
 
 ==========================================================================
 CUSTOMIZATION                                         *editqf-customization*
@@ -87,8 +87,8 @@ customized by defining a mapping in your vimrc:
 ==========================================================================
 INSTALLATION                                           *editqf-installation*
 
-1. Download editqf.vim
-2. Move file to $HOME/.vim/plugin
+1. Download editqf.vba.gz
+2. Open file in vim and run :so % to install plugin
 3. Restart vim
 
 ==========================================================================
@@ -107,6 +107,13 @@ KNOWN ISSUES                                                 *editqf-issues*
 
 ==========================================================================
 CHANGELOG                                                 *editqf-changelog*
+
+1.2
+- fix issue when editing entries without a type by setting the default
+  type to error
+- make commands overwrite commands with the same name
+- clear autocommand groups at definition time
+- change note type from error to info
 
 1.1
 - add support for hier script for highlighting quickfix and location entries

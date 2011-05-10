@@ -1,6 +1,6 @@
 This is a mirror of http://www.vim.org/scripts/script.php?script_id=3557
 
-DESCRIPTION
+DESCRIPTION                                             *editqf-description*
 
 This script is a reimplementation and continuation of the QuickFixNotes
 script (vimscript#2216). Besides the original functionality of capturing
@@ -13,7 +13,8 @@ entries easy.
 This script can be downloaded from vimscript#3557. The latest development
 version is available at https://github.com/jceb/vim-editqf.
 
-USAGE
+==========================================================================
+USAGE                                                         *editqf-usage*
 
 Create entries in the quickfix list by either running special a command
 like :make or :grep or add a note by pressing <leader>n. Then bring up the
@@ -46,11 +47,11 @@ storing and restoring quickfix and location lists:
 	:LocAddNote! [NOTE]  " like :LocAddNote but start a new location list
 	:LocAddNotePattern[!] [NOTE] " add location entry matching the pattern of the current line
 
-Editqf has integrated support for the hier script
-(http://www.github.com/jceb/vim-hier) which highlights quickfix errors to
-make them more visible.
+Editqf has integrated support for the hier script (vimscript#3564) which highlights
+quickfix errors to make them more visible.
 
-CUSTOMIZATION
+==========================================================================
+CUSTOMIZATION                                         *editqf-customization*
 
 The default filename for storing and loading quickfix and location lists is
 customizable by setting the following variables in your vimrc:
@@ -69,3 +70,4 @@ customized by defining a mapping in your vimrc:
 	nmap <leader>N <Plug>QFAddNotePattern
 	nmap <leader>l <Plug>LocAddNote
 	nmap <leader>L <Plug>LocAddNotePattern
+
