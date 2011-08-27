@@ -113,7 +113,7 @@ function! <SID>AddNote(bang, type, matchtype, ...)
 	let entry["vcol"]     = ""
 	"let entry["nr"]       = 0
 	let entry["text"]     = note
-	let entry["type"]     = "E"
+	let entry["type"]     = "I"
 
 	if a:bang == '!'
 		call s:Setlist(0, a:type, [entry], "r")
@@ -145,7 +145,7 @@ function! <SID>Save(bang, type, ...)
 			endif
 			let type = i.type
 			if i.type == ''
-				let type = 'I'
+				let type = 'E'
 			endif
 			call add(items, bufname(i.bufnr) . ':' . type . ':' . i.lnum . ':' . i.col . ':' . pattern . ':' . i.text)
 		endfor
@@ -307,12 +307,30 @@ function! <SID>Read(fname)
 	setlocal tw=0 fo-=trwnaocl
 endfunction
 
+function! <SID>ChangeType(type)
+	" change the type of the quickfix entry the cursor is currently on
+	let l:line = line(".")
+	let l:col = col(".") - 1
+	let l:qf = getqflist()
+
+	if len(l:qf) < l:line
+		return
+	endif
+
+	" change type of current error
+	let l:qf[l:line - 1]['type'] = a:type
+	call setqflist(l:qf, 'r')
+	exec "normal ".l:line."G0" . l:col . "l"
+endfunction
+
 augroup qf
 	au!
 	au BufReadCmd qf:list call <SID>Read(expand("<amatch>"))
 	au BufReadCmd loc:list call <SID>Read(expand("<amatch>"))
+	for i in ["I", "W", "E"]
+		exec "au BufReadPost quickfix nnoremap <silent> <buffer> ".i." :call <SID>ChangeType('".i."')<CR>"
+	endfor
+	for i in ["i", "a", "c", "o", "p", "r", "s", "d", "x", "A", "C", "O", "P", "R", "S", "D", "X"]
+		exec "au BufReadPost quickfix nnoremap <silent> <buffer> ".i." :if !exists('s:current_bufnr')<Bar>call <SID>Edit()<Bar>endif<CR>"
+	endfor
 augroup END
-
-for i in ["i", "a", "c", "o", "p", "r", "s", "d", "x", "I", "A", "C", "O", "P", "R", "S", "D", "X"]
-	exec "au qf BufReadPost quickfix nnoremap <silent> <buffer> ".i." :if !exists('s:current_bufnr')<Bar>call <SID>Edit()<Bar>endif<CR>"
-endfor
